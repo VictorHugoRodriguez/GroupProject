@@ -44,7 +44,7 @@ py -3 -m venv venv
 - Before working, activate and start the virtual environment, so any changes and package installs will take effect inside here ( avoid package interference )
 
 ```shell
-venv/bin/activate
+source venv/bin/activate
 ```
 
 - On Windows
