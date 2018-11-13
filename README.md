@@ -67,19 +67,32 @@ You should see a different console prompt to know we're now working insive virtu
 pip install -r requirements.txt
 ```
 
-## 4. Run project
+## 4. Create Database
+
+- Inside venv run the following commands in order to create the SQLite database for the server to push the sensor data.
+
+```shell
+
+python
+
+>>> from app import db
+>>> db.create_all()
+
+```
+
+## 5. Run project
 
 - First need to inform terminal of app to work with by exporting `FLASK_APP` environment variable.
 
 ```shell
-export FLASK_APP=hello.py
+export FLASK_APP=app.py
 flask run
     * Running on http://127.0.0.1:5000
 ```
  - On Windows Command Prompt
 
  ```shell
-C:\path\to\app> set FLASK_APP = "hello.py"
+C:\path\to\app> set FLASK_APP = "app.py"
 ```
 
 - Server should be now running in <a href="127.0.0.1:5000">http://127.0.0.1:5000</a>, or whichever port flask used to run app to see it running.

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Simple Flask App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <h1>My flask app</h1>
+    <h2>is the best</h2>
+    <button onclick="sendLogs()">Send logs</button>
+
+    <h1>Results</h1>
+    <ul id='serverResults'></ul>
+</body>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/rxjs/6.3.3/rxjs.umd.js"></script>
+<script>
+    // Socket variable to access connection on localhost:por
+    var socket = io.connect();
+
+    // Subscribe to 'connect' event and print a log to know we connected succesfully
+    socket.on( 'connect', () => {
+        console.log( 'Websocket Connected' );
+    });
+
+    socket.on( 'success', (e) => {
+        console.log(e);
+        newLi = document.createElement("li");
+        liText = document.createTextNode(`T: ${e.temp}, L: ${e.level}, F: ${e.flow}`);
+        newLi.appendChild(liText);
+        document.getElementById('serverResults').appendChild(newLi);
+    } )
+
+    // Simple log structure class object definition
+    class Log {
+        constructor(t, l, f) {
+            this.temp = t;
+            this.level = l;
+            this.flow = f;
+        }
+    }
+    // Array of logs to simulate plant readings
+    var logs = [];
+    for (let i = 0; i < 150; i++) {
+        logs.push( new Log(
+            Math.random() * 50,
+            Math.random() * 5,
+            Math.random() * 100
+        ));
+    }
+
+    var obs = rxjs.from(logs);
+
+    function Sleep(milliseconds) {
+        return new Promise ( resolve => setTimeout(resolve, milliseconds));
+    }
+
+    function sendLogs() {
+        obs.subscribe( (data) => {
+            socket.emit( 'log', data );
+            console.log(data);
+        } )
+    }
+</script>
+</html>

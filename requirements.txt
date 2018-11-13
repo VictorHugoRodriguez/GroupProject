@@ -4,6 +4,7 @@ dnspython==1.15.0
 eventlet==0.24.1
 Flask==1.0.2
 Flask-SocketIO==3.0.2
+Flask-SQLAlchemy==2.3.2
 greenlet==0.4.15
 isort==4.3.4
 itsdangerous==1.1.0
@@ -16,5 +17,6 @@ pylint==2.1.1
 python-engineio==2.3.2
 python-socketio==2.0.0
 six==1.11.0
+SQLAlchemy==1.2.14
 Werkzeug==0.14.1
 wrapt==1.10.11
